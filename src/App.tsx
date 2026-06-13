@@ -1,28 +1,38 @@
 import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <Greeting name="Alice" />
-      <UserCard name="Bob" job="Engineer" email="bob@example.com" />
-      <UserCard name="Eve" job="Hacker" email="eve@example.com" />
-      <UserCard name="Charlie" job="Designer" email="charlie@example.com" />
-    </div>
-  )
+interface GreetingProps {
+  name: string
+  role: string
 }
 
-function Greeting(props: { name: string }) {
-  return <h1>Hello, {props.name}!</h1>
+function Greeting({ name, role }: GreetingProps) {
+  return <h1>Hello {role}, {name}!</h1>
 }
 
-function UserCard(props: { name: string; job: string; email: string }) {
+interface UserCardProps {
+  name: string
+  role: string
+  isActive: boolean
+}
+
+function UserCard({ name, role, isActive }: UserCardProps) {
   return (
     <span className="user-card">
-      <h2>{props.name}</h2>
-      <p>Job: {props.job} Email: {props.email}</p>
+      <h2>{name}</h2>
+      <p>Role: {role} {isActive ? '(Active)' : '(Inactive)'}</p>
     </span>
   )
 }
 
-export default App
+function App() {
+  return (
+    <div className="App">
+      <Greeting name="Alice" role="Admin" />
+      <UserCard name="Bob" role="Engineer" isActive={true} />
+      <UserCard name="Eve" role="Hacker" isActive={false} />
+      <UserCard name="Charlie" role="Designer" isActive={true} />
+    </div>
+  )
+}
 
+export default App
