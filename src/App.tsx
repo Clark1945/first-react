@@ -1,80 +1,49 @@
+import { useState } from 'react'
+import { days } from './days/registry'
 import './App.css'
 
-interface GreetingProps {
-  name: string
-  role: string
-}
-
-function Greeting({ name, role }: GreetingProps) {
-  return <h1>Hello {role}, {name}!</h1>
-}
-
-interface UserCardProps {
-  name: string
-  role: string
-  isActive: boolean
-}
-
-function UserCard({ name, role, isActive }: UserCardProps) {
-  return (
-    <span className="user-card">
-      <h2>{name}</h2>
-      <p>Role: {role} {isActive ? '(Active)' : '(Inactive)'}</p>
-    </span>
-  )
-}
-
-type BadgeColor = 'green' | 'red' | 'gray'
-
-interface BadgeProps {
-  color: BadgeColor
-  label: string
-}
-
-function Badge({ color, label }: BadgeProps) {
-  const colorMap: Record<BadgeColor, string> = {
-    green: '#22c55e',
-    red: '#ef4444',
-    gray: '#6b7280',
-  }
-
-  return (
-    <span
-      style={{
-        backgroundColor: colorMap[color],
-        color: 'white',
-        padding: '2px 8px',
-        borderRadius: '4px',
-      }}
-    >
-      {label}
-    </span>
-  )
-}
-
-interface CardProps {
-  children: React.ReactNode // React 內建的特殊 prop，用來放子元件
-}
-
-function Card({ children }: CardProps) {
-  return (
-    <div style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}>
-      {children}
-    </div>
-  )
-}
-
+// 首頁：左側選單切換每一天的練習。
+// 現在用 useState 手刻；Day 11 學會 React Router 後會升級成路由。
 function App() {
+  const [activeId, setActiveId] = useState(days[0].id)
+  const active = days.find((d) => d.id === activeId) ?? days[0]
+  const ActiveDay = active.Component
+
   return (
-    <div className="App">
-      <Greeting name="Alice" role="Admin" />
-      <UserCard name="Bob" role="Engineer" isActive={true} />
-      <UserCard name="Eve" role="Hacker" isActive={false} />
-      <UserCard name="Charlie" role="Designer" isActive={true} />
-      <Badge color="green" label="Active" />
-      <Card>
-        <UserCard name="Dave" role="Manager" isActive={true} />
-      </Card>
+    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+      <nav style={{ width: 240, borderRight: '1px solid #e5e7eb', padding: 16 }}>
+        <h2 style={{ fontSize: 16, marginTop: 0 }}>React 30 天</h2>
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          {days.map((day) => {
+            const isActive = day.id === activeId
+            return (
+              <li key={day.id}>
+                <button
+                  onClick={() => setActiveId(day.id)}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '8px 10px',
+                    marginBottom: 4,
+                    border: 'none',
+                    borderRadius: 6,
+                    cursor: 'pointer',
+                    background: isActive ? '#2563eb' : 'transparent',
+                    color: isActive ? 'white' : '#111',
+                  }}
+                >
+                  {day.title}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+
+      <main style={{ flex: 1, padding: 24 }}>
+        <ActiveDay />
+      </main>
     </div>
   )
 }
