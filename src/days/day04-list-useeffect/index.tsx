@@ -12,10 +12,16 @@ export default function Day04() {
 
 import { useState, useEffect } from "react";
 
+type Todo = {
+  id: number;
+  title: string;
+  completed: boolean;
+};
+
 function TodoListFromAPI() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
@@ -57,8 +63,13 @@ function TodoListFromAPI() {
   );
 }
 
-function UserProfile({ userId }) {
-  const [user, setUser] = useState(null);
+type User = {
+  name: string;
+  email: string;
+};
+
+function UserProfile({ userId }: { userId: number }) {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -73,6 +84,7 @@ function UserProfile({ userId }) {
   }, [userId]); // userId 一變 → 重新 fetch
 
   if (loading) return <p>載入中...</p>;
+  if (!user) return null;
 
   return (
     <div>
