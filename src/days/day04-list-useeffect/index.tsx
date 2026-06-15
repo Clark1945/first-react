@@ -73,6 +73,8 @@ function UserProfile({ userId }: { userId: number }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // userId 改變時切回載入中畫面（學習用：刻意在 effect 內同步更新 state）
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
 
     fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
