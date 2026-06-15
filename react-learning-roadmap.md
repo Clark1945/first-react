@@ -38,6 +38,7 @@
 - `onSubmit` + `e.preventDefault()`
 - 表單驗證：Email 格式、密碼長度、錯誤訊息顯示
 - **Java 類比**：Controlled component ≈ Spring MVC Model Binding
+- setInterval and cleanup in useEffect
 
 ### Day 6 — TailwindCSS
 - 安裝與設定
