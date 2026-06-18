@@ -15,7 +15,7 @@ export default function Day08() {
   )
 }
 
-function Card({ children, className = "" }) {
+function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
     return (
         <div className={`bg-white rounded-xl shadow-md p-6 ${className}`}>
             {children}
@@ -24,7 +24,7 @@ function Card({ children, className = "" }) {
 }
 
 // src/components/Layout.jsx
-function Layout({ children }) {
+function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen bg-gray-50">
 
